@@ -21,7 +21,8 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "http://localhost:5174",
-    "https://vintage-styles-frontend.vercel.app"
+    "https://vintage-styles-frontend.vercel.app",
+    "https://vintage-styles-admin.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "token"]
