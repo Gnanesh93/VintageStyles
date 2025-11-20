@@ -18,12 +18,15 @@ connectCloudinary();
 // Middleware
 app.use(express.json());
 
-// ✅ Simple CORS setup allowing frontend
 app.use(cors({
-  origin: ["http://localhost:5174", "https://vintage-styles-frontend.vercel.app"],
+  origin: [
+    "http://localhost:5174",
+    "https://vintage-styles-frontend.vercel.app"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "token"]
 }));
+
 
 // Routes
 app.use('/api/user', userRouter);

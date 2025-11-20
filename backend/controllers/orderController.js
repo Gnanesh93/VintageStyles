@@ -5,7 +5,6 @@ import Stripe from 'stripe'
 // global variables
 const currency='inr'
 const deliveryCharge=60
-console.log("Stripe Key Loaded:", process.env.STRIPE_SECRET_KEY ? "YES" : "NO");
 
 
 //payment gateway Initialize
