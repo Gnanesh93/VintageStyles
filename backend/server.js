@@ -1,53 +1,42 @@
 import express from 'express';
 import cors from 'cors';
-import 'dotenv/config' ;
+import 'dotenv/config';
 import connectDb from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
-import deliveryPartnerRouter from './routes/deliveryPartnerRoute.js';
-import cors from "cors";
 
-const app=express()
-const port=process.env.PORT || 5000
+const app = express();
+const port = process.env.PORT || 5000;
 
-connectDb()
+// Connect DB and Cloudinary
+connectDb();
 connectCloudinary();
 
-app.use(express.json())
+// Middleware
+app.use(express.json());
 
+// ✅ Simple CORS setup allowing frontend
 app.use(cors({
-  origin: [
-    "http://localhost:5173",     
-    "http://localhost:5174",     
-    "https://vintage-styles-frontend.vercel.app",
-    "https://vintage-styles-admin.vercel.app"
-  ],
+  origin: ["http://localhost:5174", "https://vintage-styles-frontend.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "token"],
-  credentials: true
+  allowedHeaders: ["Content-Type", "Authorization", "token"]
 }));
 
+// Routes
+app.use('/api/user', userRouter);
+app.use('/api/product', productRouter);
+app.use('/api/cart', cartRouter);
+app.use('/api/order', orderRouter);
 
+// Test route
+app.get('/', (req, res) => {
+  res.send("API Working");
+});
 
-
-
-
-
-// api end points
-app.use('/api/user',userRouter)
-app.use('/api/product',productRouter)
-app.use('/api/cart',cartRouter)
-app.use('/api/order',orderRouter)
-app.use('/api/partner', deliveryPartnerRouter);
-
-
-app.get('/',(req,res)=>{
-    res.send("Api Working")
-})
-
-app.listen(port,()=>{
-    console.log(`server up! at ${port}`)
-})
+// Start server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

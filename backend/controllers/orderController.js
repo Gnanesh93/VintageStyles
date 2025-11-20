@@ -5,9 +5,13 @@ import Stripe from 'stripe'
 // global variables
 const currency='inr'
 const deliveryCharge=60
+console.log("Stripe Key Loaded:", process.env.STRIPE_SECRET_KEY ? "YES" : "NO");
+
 
 //payment gateway Initialize
-const stripe=new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2024-06-20",
+});
 
 //place orders using COD
 const placeOrder=async (req,res)=>{
