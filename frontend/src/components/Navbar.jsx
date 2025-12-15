@@ -38,9 +38,10 @@ const Navbar = () => {
         <div className="flex items-center gap-6">
             <img onClick={()=>setShowSearch(true)} src={assets.search_icon} className="w-5 cursor-pointer" alt="search-icon"/>
             <div className="group relative">
-                <img onClick={()=>{if(!token) navigate('/login');}} src={assets.profile_icon} className="w-5 cursor-pointer" alt="profile-icon"/>
+                <img onClick={()=>{if(!token) navigate('/login');}} src={assets.profile_icon} 
+                className="w-8 h-8 cursor-pointer rounded-full border-2 border-gray-300 p-1 hover:border-green-500" alt="profile-icon"/>
                 {token && 
-                <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
+                <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4 border-green-500">
                     <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
                         <p className="cursor-pointer hover:text-black">My Profile</p>
                         <p onClick={()=>navigate('/orders')} className="cursor-pointer hover:text-black">Orders</p>
