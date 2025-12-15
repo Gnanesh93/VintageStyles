@@ -9,8 +9,14 @@ const Product = () => {
   const[productData,setProductData]=useState(false);
   const[image,setImage]=useState("")
   const[size,setSize]=useState("")
-  
 
+  useEffect(() => {
+  setProductData(false);
+  setImage("");
+  setSize("");
+}, [productId]);
+
+  
   const fetchProductData = () => {
   const product = products.find(item => item._id === productId);
   if (product) {
