@@ -54,6 +54,21 @@ const Hero = () => {
           <button key={index} onClick={() => setCurrent(index)} className={`w-3 h-3 rounded-full ${current === index ? "bg-black" : "bg-gray-400"}`}></button>
         ))}
       </div>
+      {/* Floating sparkle dots */}
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+  {Array.from({ length: 20 }).map((_, i) => (
+    <span
+      key={i}
+      className="sparkle"
+      style={{
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 5}s`,
+        animationDuration: `${4 + Math.random() * 4}s`,
+      }}
+    />
+  ))}
+</div>
     </div>
   );
 }

@@ -15,7 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify'
 import TrackingPage from './pages/TrackingPage'
-import ProductWrapper from './pages/Productwrapper'
+import ProductWrapper from './pages/ProductWrapper'
 
 const App = () => {
   return (

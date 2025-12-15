@@ -24,4 +24,32 @@ a.active hr{
         color:white;
     }
 }
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #ffd700 0%, #ffb300 40%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  animation-name: sparkleFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes sparkleFloat {
+  0% {
+    transform: translateY(20px) scale(0.5);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-40px) scale(1.2);
+    opacity: 0;
+  }
+}
 
