@@ -15,6 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify'
 import TrackingPage from './pages/TrackingPage'
+import ProductWrapper from './pages/Productwrapper'
 
 const App = () => {
   return (
@@ -28,11 +29,7 @@ const App = () => {
         <Route path="/about" element={<About/>} />
         <Route path="/contact" element={<Contact/>} />
         {/* <Route path="/product/:productId" element={<Product/>} /> */}
-        <Route
-  path="/product/:productId"
-  element={<Product key={window.location.pathname} />}
-/>
-
+        <Route path="/product/:productId" element={<ProductWrapper />}/>
         <Route path="/cart" element={<Cart/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/place-order" element={<PlaceOrder/>} />
