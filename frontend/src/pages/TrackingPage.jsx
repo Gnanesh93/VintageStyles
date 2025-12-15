@@ -50,7 +50,7 @@ const TrackingPage = ()=>{
     <div className="p-6">
       <h2 className="text-xl font-semibold mb-4">Track Order</h2>
 
-      <div className="border p-4 rounded mb-6">
+      <div className="max-w-md border p-4 rounded mb-6 bg-white shadow-sm">
         <p><strong>Order ID:</strong> {order._id}</p>
         <p><strong>Date:</strong> {new Date(order.date).toLocaleString()}</p>
         <p><strong>Amount:</strong> {currency}{order.amount}</p>
@@ -96,7 +96,7 @@ const TrackingPage = ()=>{
       </div>
 
       {order.assignedPartner && (
-        <div className="border p-4 rounded bg-green-50">
+        <div className="max-w-md border p-4 rounded bg-green-50 shadow-sm">
           <h3 className="font-medium mb-2 text-green-700">Delivery Partner Details</h3>
           <p><strong>Company Name:</strong> {order.assignedPartner.companyName}</p>
           <p><strong>Partner ID:</strong> {order.assignedPartner.partnerId}</p>
