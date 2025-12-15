@@ -55,7 +55,7 @@ const Hero = () => {
         ))}
       </div>
       {/* Floating sparkle dots */}
-<div className="pointer-events-none absolute inset-0 overflow-hidden">
+<div className="pointer-events-none absolute inset-0 overflow-hidden z-50">
   {Array.from({ length: 20 }).map((_, i) => (
     <span
       key={i}
