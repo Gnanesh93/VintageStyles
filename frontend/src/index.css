@@ -24,17 +24,20 @@ a.active hr{
         color:white;
     }
 }
+
 .sparkle {
   position: absolute;
-  width: 6px;
-  height: 6px;
-  background: radial-gradient(circle, #ffd700 0%, #ffb300 40%, transparent 70%);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ffd700 0%, #ffcc00 35%, transparent 70%);
   border-radius: 50%;
   opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(255, 204, 0, 0.9));
   animation-name: sparkleFloat;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
+
 
 @keyframes sparkleFloat {
   0% {
