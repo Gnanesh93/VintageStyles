@@ -11,19 +11,22 @@ const Product = () => {
   const[size,setSize]=useState("")
   
 
-  const fetchProductData=async ()=>{
-    products.map((item)=>{
-      if(item._id===productId){
-        setProductData(item)
-        setImage(item.image[0])
-        return null;
-      }
-    })
+  const fetchProductData = () => {
+  const product = products.find(item => item._id === productId);
+  if (product) {
+    setProductData(product);
+    setImage(product.image[0]);
+    setSize(""); // reset when switching products
   }
+};
 
-  useEffect(()=>{
+
+  useEffect(() => {
+  if (products.length > 0) {
     fetchProductData();
-  },[productId])
+  }
+}, [productId, products]);
+
 
   useEffect(() => {
   if (productData && productData.productType === 'Saree') {
