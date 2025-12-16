@@ -41,10 +41,10 @@ app.use("/api/partner", deliveryPartnerRouter);
 
 // Test route
 app.get('/', (req, res) => {
-  res.send("API Working");
+  res.send("API is Working");
 });
 
-// Start server
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

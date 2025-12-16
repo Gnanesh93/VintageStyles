@@ -100,22 +100,19 @@ const ForgotPassword = () => {
             <button onClick={verifyOtp} disabled={loading} className="w-full cursor-pointer bg-black text-white py-2 rounded-md text-sm sm:text-base">
               {loading ? "Verifying..." : "Verify OTP"}
             </button>
-
             {otpError && (
-              <div className="text-center mt-4 space-y-2">
-                <button onClick={resendOtp} className="text-sm text-red-500 underline hover:text-blue-800 cursor-pointer">Resend OTP</button>
-
-                <button className="text-sm text-blue-600 underline hover:text-blue-800 cursor-pointer"
+              <div className="mt-4 flex justify-between px-2">
+                <button onClick={resendOtp} className="text-sm text-blue-600 underline cursor-pointer">Resend OTP</button>
+                <button className="text-sm text-gray-600 underline cursor-pointer"
                   onClick={() => {
-                    setStep(1);
-                    setOtp(Array(6).fill(""));
-                  }}>Change Email
+                  setStep(1);
+                  setOtp(Array(6).fill(""));}}>Change Email
                 </button>
               </div>
             )}
           </>
         )}
-
+        
         {step === 3 && <ResetPassword email={email} />}
       </div>
     </div>
