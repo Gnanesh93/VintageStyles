@@ -13,39 +13,25 @@ const ResetPassword = ({ email }) => {
 
   const resetPassword = async () => {
     try {
-      const res = await axios.post(
-        backendUrl + "/api/user/reset-password",
-        { email, password, confirmPassword }
-      );
-
+      const res = await axios.post(backendUrl + '/api/user/reset-password',{email,password,confirmPassword});
       if (res.data.success) {
         toast.success("Password reset successful");
         navigate("/login");
-      } else {
+      } 
+      else{
         toast.error(res.data.message);
       }
-    } catch (err) {
+    } 
+    catch (err) {
       toast.error(err.message);
     }
   };
 
   return (
     <>
-      <input
-        className="w-full px-3 py-2 border"
-        type="password"
-        placeholder="New password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input
-        className="w-full px-3 py-2 border"
-        type="password"
-        placeholder="Confirm password"
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      <button onClick={resetPassword} className="btn-black">
-        Reset Password
-      </button>
+      <input className="w-full px-3 py-2 border" type="password" placeholder="New password" onChange={(e) => setPassword(e.target.value)}/>
+      <input className="w-full px-3 py-2 border" type="password" placeholder="Confirm password"onChange={(e)=>setConfirmPassword(e.target.value)} />
+      <button onClick={resetPassword} className="btn-black">Reset Password</button>
     </>
   );
 };

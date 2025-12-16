@@ -1,27 +1,30 @@
-import {useState} from "react";
+import { useState, useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
+
 import OtpInput from "../components/OtpInput";
 import ResetPassword from "./ResetPassword";
 import axios from "axios";
 import {toast} from "react-toastify";
 
 const ForgotPassword =()=>{
+  const { backendUrl } = useContext(ShopContext);
   const [email,setEmail] = useState("");
   const [otp,setOtp] = useState(Array(6).fill(""));
   const [step,setStep] = useState(1);
 
   const sendOtp = async () => {
-    const res = await axios.post("/api/user/forgot-password", {email});
+    const res = await axios.post(backendUrl+'/api/user/forgot-password',{email});
     res.data.success ? setStep(2) : toast.error(res.data.message);
   };
 
   const verifyOtp = async ()=>{
     const otpValue = otp.join("");
-    const res = await axios.post("/api/user/verify-otp", {email,otp:otpValue,});
+    const res = await axios.post(backendUrl+'/api/user/verify-otp',{email,otp:otpValue,});
     res.data.success ? setStep(3) : toast.error(res.data.message);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex pt-20 sm:pt-24 justify-center px-4">
       <div className="w-full max-w-sm bg-white border border-gray-300 rounded-lg p-5 sm:p-6">
         <p className="prata-regular text-xl sm:text-2xl text-center mb-6">Forgot Password</p>
         {step === 1 && (
@@ -44,7 +47,7 @@ const ForgotPassword =()=>{
             <button onClick={verifyOtp} className="w-full bg-black text-white py-2 rounded-md mt-4 text-sm sm:text-base"> Verify OTP</button>
           </>
         )}
-        
+
         {step === 3 && <ResetPassword email={email} />}
       </div>
     </div>
