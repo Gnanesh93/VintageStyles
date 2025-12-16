@@ -1,65 +1,79 @@
-import {useState,useRef} from "react";
-import {assets} from "../assets/assets";
+import {assets} from '../assets/assets'
+import { Link,NavLink } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { ShopContext } from '../context/ShopContext';
 
-const Hero=()=>{
-  const images=[assets.slider1,assets.slider2,assets.slider3,assets.slider4,assets.slider5,assets.slider6];
-  const [current,setCurrent] = useState(0);
-  const touchStartX = useRef(null);
+const Navbar = () => {
+    const[visible,setVisible]=useState(false);
+    const{setShowSearch,getCartCount,navigate,token,setToken,setCartItems}=useContext(ShopContext);
 
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % images.length);
-  const prevSlide = () => setCurrent((prev) => (prev - 1 + images.length) % images.length);
-
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    if (touchStartX.current === null) return;
-    const diff = e.changedTouches[0].clientX - touchStartX.current;
-    if (diff > 50) prevSlide();
-    if (diff < -50) nextSlide();
-    touchStartX.current = null;
-  };
+    const logout=()=>{
+        navigate('/login')
+        localStorage.removeItem('token')
+        setToken("")
+        setCartItems({})
+    }
 
   return (
-    <div className="relative w-full z-0">
-      
-      <div className="overflow-hidden">
-        <div className="flex transition-transform duration-700" style={{ transform: `translateX(-${current * 100}%)` }}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd} >
-          {images.map((src, index) => (
-            <img key={index} src={src} alt={`Slide ${index}`} className="w-full h-[250px] sm:h-[500px] lg:h-[600px] object-cover flex-shrink-0" />
-          ))}
+    <div className='relative flex items-center justify-between py-5 font-medium z-50'>
+        <Link to="/"><img src={assets.logo} alt="logo2" className="w-16 sm:w-20 md:w-24 lg:w-28 border-3 border-transparent hover:border-yellow-700 rounded-lg transition-all duration-300"/></Link>
+        <ul className="hidden sm:flex gap-5 text-sm text-gray-700 ">
+            <NavLink to="/" className="flex flex-col items-center gap-1">
+                <p>HOME</p>
+                <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden"></hr>
+            </NavLink>
+            <NavLink to="/collection" className="flex flex-col items-center gap-1">
+                <p>COLLECTION</p>
+                <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden"></hr>
+            </NavLink>
+            <NavLink to="/about" className="flex flex-col items-center gap-1">
+                <p>ABOUT</p>
+                <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden"></hr>
+            </NavLink>
+            <NavLink to="/contact" className="flex flex-col items-center gap-1">
+                <p>CONTACT</p>
+                <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden"></hr>
+            </NavLink>
+        </ul>
+        <div className="flex items-center gap-6">
+            <img onClick={()=>setShowSearch(true)} src={assets.search_icon} className="w-5 cursor-pointer" alt="search-icon"/>
+            <div className="group relative">
+                <img onClick={()=>{if(!token) navigate('/login');}} src={assets.profile_icon} 
+                className="w-8 h-8 cursor-pointer rounded-full border-2 border-gray-300 p-1 hover:border-green-500" alt="profile-icon"/>
+                {token && 
+                <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4 ">
+                    <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded rounded border-2 border-green-500">
+                        <p className="cursor-pointer hover:text-black">My Profile</p>
+                        <p onClick={()=>navigate('/orders')} className="cursor-pointer hover:text-black">Orders</p>
+                        <p onClick={logout} className="cursor-pointer hover:text-black">Logout</p>
+                    </div>
+                </div> }
+            </div>
+            <div onClick={() => token ? navigate('/cart') : navigate('/login')} className="relative cursor-pointer">
+                <img src={assets.cart_icon} className="w-5 min-w-5" alt="cart-icon"/>
+                <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+                    {getCartCount()}
+                </p>
+            </div>
+            <img onClick={()=>setVisible(true)} src={assets.menu_icon} className="w-5 cursor-pointer sm:hidden"/>
+
         </div>
-      </div>
+        {/* side bar for mobile screens */}
+        <div className={`fixed top-0 right-0 bottom-0 bg-white transition-all duration-300 ${visible ? 'w-full z-50' : 'w-0'}`}>
+            <div className="flex flex-col text-gray-600">
+                <div onClick={()=>setVisible(false)}className="flex items-center gap-4 p-3">
+                    <img src={assets.dropdown_icon} className="h-4 rotate-180" alt=""/>
+                    <p>Back</p>
+                </div>
+                <NavLink onClick={()=>setVisible(false)} to="/" className="py-2 pl-6 border">HOME</NavLink>
+                <NavLink onClick={()=>setVisible(false)} to="/collection" className="py-2 pl-6 border">COLLECTION</NavLink>
+                <NavLink onClick={()=>setVisible(false)} to="/about" className="py-2 pl-6 border">ABOUT</NavLink>
+                <NavLink onClick={()=>setVisible(false)} to="/contact" className="py-2 pl-6 border">CONTACT</NavLink>
+            </div>
+        </div>
 
-      <button onClick={prevSlide}
-        className="absolute top-1/2 left-3 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white rounded-full shadow-md backdrop-blur-sm text-2xl font-bold">❮
-      </button>
-      <button onClick={nextSlide}
-        className="absolute top-1/2 right-3 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/80 hover:bg-white rounded-full shadow-md backdrop-blur-sm text-2xl font-bold">❯
-      </button>
-
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-        {images.map((_, index) => (
-          <button key={index} onClick={() => setCurrent(index)} className={`w-3 h-3 rounded-full ${current === index ? "bg-black" : "bg-gray-400"}`}></button>
-        ))}
-      </div>
-      <div className="pointer-events-none absolute inset-0 overflow-hidden z-50">
-        {Array.from({ length: 60 }).map((_, i) => (
-          <span key={i} className="sparkle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${4 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Navbar;
