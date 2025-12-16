@@ -103,9 +103,9 @@ const ForgotPassword = () => {
 
             {otpError && (
               <div className="text-center mt-4 space-y-2">
-                <button onClick={resendOtp} className="text-sm text-blue-600 underline">Resend OTP</button>
+                <button onClick={resendOtp} className="text-sm text-red-500 underline hover:text-blue-800 cursor-pointer">Resend OTP</button>
 
-                <button className="block text-sm text-gray-600 underline mx-auto"
+                <button className="text-sm text-blue-600 underline hover:text-blue-800 cursor-pointer"
                   onClick={() => {
                     setStep(1);
                     setOtp(Array(6).fill(""));
