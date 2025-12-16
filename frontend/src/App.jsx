@@ -16,6 +16,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify'
 import TrackingPage from './pages/TrackingPage'
 import ProductWrapper from './pages/ProductWrapper'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+
 
 const App = () => {
   return (
@@ -36,6 +39,7 @@ const App = () => {
         <Route path="/orders" element={<Orders/>} />
         <Route path="/verify" element={<Verify/>}/>
         <Route path="/track/:orderId" element={<TrackingPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
       <Footer/>
     </div>

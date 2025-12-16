@@ -2,6 +2,8 @@ import userModel from "../models/userModel.js";
 import validator from 'validator'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
+import sendOtpEmail from "../utility/sendEmail.js";
 
 const createToken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET)
@@ -80,4 +82,84 @@ const adminLogin = async (req, res) => {
   }
 };
 
-export {loginUser,registerUser,adminLogin}
+// forgot password
+const forgotPassword=async (req,res)=>{
+  try{
+    const {email}=req.body;
+    const user=await userModel.findOne({email});
+    if(!user){
+      return res.json({success:false,message:"User not found"});
+    }
+
+    const otp=Math.floor(100000+Math.random()* 900000).toString();
+
+    const hashedOtp=crypto
+      .createHash("sha256")
+      .update(otp)
+      .digest("hex");
+
+    user.resetOtp=hashedOtp;
+    user.resetOtpExpire=Date.now()+10*60*1000;
+
+    await user.save();
+    await sendOtpEmail(email,otp);
+
+    res.json({success:true,message:"OTP sent to email" });
+  } 
+  catch(error){
+    res.json({success:false,message: error.message });
+  }
+};
+
+// verify otp
+const verifyOtp=async (req,res)=>{
+  const {email,otp}=req.body;
+
+  const hashedOtp=crypto
+    .createHash("sha256")
+    .update(otp)
+    .digest("hex");
+
+  const user=await userModel.findOne({
+    email,
+    resetOtp: hashedOtp,
+    resetOtpExpire:{$gt:Date.now()},
+  });
+
+  if(!user){
+    return res.json({success:false,message:"Invalid or expired OTP"});
+  }
+
+  res.json({success:true,message:"OTP verified" });
+};
+
+// reset password
+const resetPassword=async (req,res)=>{
+  const {email,password,confirmPassword}=req.body;
+
+  if (password !== confirmPassword){
+    return res.json({success: false,message:"Passwords do not match" });
+  }
+
+  if (password.length < 8){
+    return res.json({success: false,message:"Password too short" });
+  }
+
+  const user=await userModel.findOne({email});
+  if (!user){
+    return res.json({success:false,message:"User not found" });
+  }
+
+  const salt=await bcrypt.genSalt(10);
+  user.password=await bcrypt.hash(password,salt);
+
+  user.resetOtp=undefined;
+  user.resetOtpExpire=undefined;
+
+  await user.save();
+
+  res.json({success:true,message:"Password reset successful" });
+};
+
+
+export {loginUser,registerUser,adminLogin,forgotPassword,verifyOtp,resetPassword}

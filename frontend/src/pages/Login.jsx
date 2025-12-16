@@ -57,7 +57,7 @@ const Login = () => {
       <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" className='w-full px-3 py-2 border border-gray-800' placeholder="Email" required/>
       <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" className='w-full px-3 py-2 border border-gray-800' placeholder="Password" required/>
       <div className='w-full flex justify-between mt-[-8px] text-sm'>
-        <p className='cursor-pointer'>Forgot Your Password ?</p>
+        <p className="cursor-pointer text-blue-600" onClick={()=>navigate("/forgot-password")}>Forgot Your Password?</p>
         {currentState==='Login' 
         ? <p className='cursor-pointer' onClick={()=>setCurrentState('Sign Up')}>Create account</p> 
         : <p className='cursor-pointer' onClick={()=>setCurrentState('Login')}>Already have account? Login here</p>}
