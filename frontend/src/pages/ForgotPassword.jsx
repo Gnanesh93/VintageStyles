@@ -1,80 +1,38 @@
-import { useState, useContext } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { ShopContext } from "../context/ShopContext";
+import {useState} from "react";
+import OtpInput from "../components/OtpInput";
 import ResetPassword from "./ResetPassword";
+import axios from "axios";
+import {toast} from "react-toastify";
 
-const ForgotPassword = () => {
-  const { backendUrl } = useContext(ShopContext);
+const ForgotPassword =()=>{
+  const [email,setEmail] = useState("");
+  const [otp,setOtp] = useState(Array(6).fill(""));
+  const [step,setStep] = useState(1);
 
-  const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
-  const [step, setStep] = useState(1);
-
-  const sendOtp = async () => {
-    try {
-      const res = await axios.post(
-        backendUrl + "/api/user/forgot-password",
-        { email }
-      );
-
-      if (res.data.success) {
-        toast.success("OTP sent");
-        setStep(2);
-      } else {
-        toast.error(res.data.message);
-      }
-    } catch (err) {
-      toast.error(err.message);
-    }
+  const sendOtp=async ()=>{
+    const res = await axios.post("/api/user/forgot-password",{email});
+    res.data.success ? setStep(2) : toast.error(res.data.message);
   };
 
-  const verifyOtp = async () => {
-    try {
-      const res = await axios.post(
-        backendUrl + "/api/user/verify-otp",
-        { email, otp }
-      );
-
-      if (res.data.success) {
-        toast.success("OTP verified");
-        setStep(3);
-      } else {
-        toast.error(res.data.message);
-      }
-    } catch (err) {
-      toast.error(err.message);
-    }
+  const verifyOtp = async()=>{
+    const otpValue = otp.join("");
+    const res = await axios.post("/api/user/verify-otp",{email,otp: otpValue,});
+    res.data.success ? setStep(3) : toast.error(res.data.message);
   };
 
   return (
-    <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4">
-      <h2 className="text-2xl font-semibold">Forgot Password</h2>
-
+    <div className="form">
       {step === 1 && (
         <>
-          <input
-            className="w-full px-3 py-2 border"
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <button onClick={sendOtp} className="btn-black">
-            Request OTP
-          </button>
+          <input placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+          <button onClick={sendOtp}>Request OTP</button>
         </>
       )}
 
       {step === 2 && (
         <>
-          <input
-            className="w-full px-3 py-2 border"
-            placeholder="Enter OTP"
-            onChange={(e) => setOtp(e.target.value)}
-          />
-          <button onClick={verifyOtp} className="btn-black">
-            Verify OTP
-          </button>
+          <OtpInput otp={otp} setOtp={setOtp} />
+          <button onClick={verifyOtp}>Verify OTP</button>
         </>
       )}
 
