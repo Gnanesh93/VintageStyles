@@ -40,7 +40,7 @@ const Hero = () => {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd} >
           {images.map((src, index) => (
-            <img key={index} src={src} alt={`Slide ${index}`} className="w-full h-[250px] sm:h-[500px] lg:h-[600px] object-cover flex-shrink-0"/>
+            <img key={index} src={src} alt={`Slide ${index}`} className="w-full h-[250px] sm:h-[500px] lg:h-[600px] object-contain flex-shrink-0"/>
           ))}
         </div>
 
