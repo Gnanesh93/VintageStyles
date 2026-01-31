@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 import {assets} from '../assets/assets'
 import RelatedProducts from '../components/RelatedProducts';
+import ProductDescription from "../components/ProductDescription";
+import ProductReviews from "../components/ProductReviews";
+
 const Product = () => {
   const{productId}=useParams();
   const{products,currency,addToCart,token,navigate}=useContext(ShopContext);
@@ -96,23 +99,14 @@ const Product = () => {
         </div>
       </div>
       {/* description and reviews */}
-      <div className='mt-20'>
-        <div className='flex'>
-          <b className='border px-5 py-3 text-sm'>Description</b>
-          <p className='border px-5 py-3 text-sm'>Reviews(122)</p>
-        </div>
-        <div className='flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500'>
-          <p> The <strong>{productData.name}</strong> is crafted with premium quality materials for long-lasting comfort and durability. 
-              Designed to keep up with your daily lifestyle, this product combines modern design with superior performance, 
-              making it perfect for casual wear or active days.
-          </p>
-          <p>
-            Each <strong>{productData.name}</strong> undergoes a thorough quality check before packaging. 
-            Manufactured using sustainable processes, it ensures comfort, style, and reliability you can trust. 
-            Pair it with your favorite accessories to complete your everyday look.
-          </p>
-        </div>
+      <div className="mt-20">
+        <ProductDescription product={productData} />
       </div>
+
+      <div className="mt-12">
+        <ProductReviews productId={productData._id} />
+      </div>
+
       {/* related products */}
       <RelatedProducts category={productData.category} subCategory={productData.subCategory}  productType={productData.productType} productId={productData._id} />
     </div>
