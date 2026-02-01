@@ -91,7 +91,7 @@ const addProductReview=async(req,res)=>{
     const alreadyReviewed = product.reviews.find(r => r.user.toString() === req.userId);
 
     if (alreadyReviewed){
-      return res.json({ success:false, message: "Already reviewed"});
+      return res.json({success:false, message: "Already reviewed"});
     }
 
     const images = req.files?.map(file =>file.path) || [];

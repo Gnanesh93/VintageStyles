@@ -1,7 +1,7 @@
 import StarRating from "./StarRating";
 
-const ShowReviews = ({ reviews }) => {
-  if (reviews.length === 0) {
+const ShowReviews = ({reviews})=>{
+  if (reviews.length === 0){
     return <p className="text-gray-500">No reviews yet</p>;
   }
 
@@ -22,12 +22,8 @@ const ShowReviews = ({ reviews }) => {
 
           {review.images?.length > 0 && (
             <div className="flex gap-2 mt-2">
-              {review.images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  className="w-20 h-20 object-cover border rounded"
-                />
+              {review.images.map((img,idx)=>(
+                <img key={idx} src={img} className="w-20 h-20 object-cover border rounded" />
               ))}
             </div>
           )}

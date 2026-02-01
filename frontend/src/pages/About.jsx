@@ -12,7 +12,7 @@ const About = () => {
         <img src={assets.about_img} alt="" className='w-full md:max-w-[450px]'/>
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-gray-600'>
           <p>
-            Welcome to <b>Vintage Styles</b>, where timeless elegance meets today’s trends.
+            Welcome to <b>Vintage Styles</b>, where timeless elegance meets today's trends.
             We bring back the charm of classic fashion with a modern twist.
             Every piece tells a story — crafted with care, designed to inspire, and made to last.
           </p>
@@ -25,7 +25,7 @@ const About = () => {
           </p>
           <b className='text-gray-800'>Our Mission</b>
           <p>
-            Our mission is to revive the timeless beauty of vintage fashion and make it a part of today’s lifestyle.
+            Our mission is to revive the timeless beauty of vintage fashion and make it a part of today's lifestyle.
             We believe that true style never fades — it evolves.
             Through thoughtful design, quality craftsmanship, and a passion for sustainability, we aim to connect the past with the present, one outfit at a time.
           </p>
@@ -38,7 +38,7 @@ const About = () => {
         <div className='border px-10 md:px-16 sm:py-20 flex flex-col gap-5'>
           <b>Quality Assurance:</b>
           <p className='text-gray-600'>
-            At Vintage Styles, quality isn’t just a goal — it’s our promise.
+            At Vintage Styles, quality isn't just a goal — it's our promise.
             Every piece we create undergoes strict quality checks to ensure durability, comfort, and flawless craftsmanship.
             From fabric selection to final stitching, our team ensures each product meets the highest standards before it reaches you.
           </p>
@@ -54,7 +54,7 @@ const About = () => {
           <b>Exceptional Customer Service:</b>
           <p className='text-gray-600'>
             We believe every customer deserves personal attention.
-            Our dedicated support team is always ready to assist you — from inquiries to post-purchase care - ensuring a smooth and satisfying experience.
+            Our dedicated support team is always ready to assist you - from inquiries to post-purchase care - ensuring a smooth and satisfying experience.
           </p>
         </div>
       </div>
@@ -63,4 +63,4 @@ const About = () => {
   )
 }
 
-export default About
+export default About;
