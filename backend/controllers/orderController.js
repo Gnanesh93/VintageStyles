@@ -15,7 +15,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 //place orders using COD
 const placeOrder=async (req,res)=>{
     try {
-       const{userId,items,amount,address}=req.body
+       const userId=req.userId;
+       const{items,amount,address}=req.body
        const orderData={
         userId,
         items,
@@ -40,7 +41,8 @@ const placeOrder=async (req,res)=>{
 //place orders using Stripe Method
 const placeOrderStripe=async (req,res)=>{
     try {
-       const{userId,items,amount,address}=req.body
+       const userId=req.userId;
+       const{items,amount,address}=req.body
        const{origin}=req.headers
        const orderData={
         userId,
@@ -93,7 +95,7 @@ const placeOrderStripe=async (req,res)=>{
 //verify stripe
 const verifyStripe=async (req,res)=>{
     const{orderId,success}=req.body
-    const userId = req.body.userId; 
+    const userId = req.userId; 
     try {
        if(success==='true'){
         await orderModel.findByIdAndUpdate(orderId,{payment:true});
@@ -115,7 +117,7 @@ const verifyStripe=async (req,res)=>{
 // user order data for frontend
 const userOrders=async (req,res)=>{
     try {
-       const{userId}=req.body 
+       const userId=req.userId;
        const orders=await orderModel.find({userId})
        res.json({success:true,orders})
     } 
@@ -128,23 +130,24 @@ const userOrders=async (req,res)=>{
 // Get single order for logged-in user (track)
 const trackOrder = async (req, res) => {
   try {
-    // authUser middleware already set req.body.userId
-    const { userId, orderId } = req.body;
+    const userId=req.userId;
+    const{orderId} = req.body;
 
-    if (!orderId) {
-      return res.json({ success: false, message: "orderId is required" });
+    if (!orderId){
+      return res.json({success:false, message:"orderId is required"});
     }
 
-    const order = await orderModel.findOne({ _id: orderId, userId });
+    const order = await orderModel.findOne({ _id: orderId,userId });
 
     if (!order) {
-      return res.json({ success: false, message: "Order not found" });
+      return res.json({success:false, message:"Order not found"});
     }
 
-    res.json({ success: true, order });
-  } catch (error) {
+    res.json({success:true,order});
+  } 
+  catch (error){
     console.log("trackOrder error:", error.message);
-    res.json({ success: false, message: error.message });
+    res.json({success: false,message: error.message});
   }
 };
  
