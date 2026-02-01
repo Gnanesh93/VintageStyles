@@ -1,9 +1,9 @@
-import {useState,useContext } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
-import {ShopContext} from "../context/ShopContext";
-import {toast} from "react-toastify";
+import { ShopContext } from "../context/ShopContext";
+import { toast } from "react-toastify";
 
-const AddReview = ({productId, onSuccess})=>{
+const AddReview = ({productId,onSuccess})=>{
   const {backendUrl,token} = useContext(ShopContext);
 
   const [rating,setRating] = useState("");
@@ -33,7 +33,7 @@ const AddReview = ({productId, onSuccess})=>{
       return;
     }
 
-    if (!comment.trim()) {
+    if (!comment.trim()){
       toast.error("Please write a review!");
       return;
     }
@@ -67,30 +67,39 @@ const AddReview = ({productId, onSuccess})=>{
   };
 
   return (
-    <div className="border rounded-lg p-5 mt-6 bg-gray-50">
-      <h3 className="font-semibold text-lg mb-4">Write a review</h3>
-      <label className="text-sm font-medium text-gray-700">Rating (1-5)</label>
-      <input type="text" placeholder="4.5" value={rating} onChange={handleRatingChange} 
-        className="border px-2 py-1.5 w-20 text-sm mt-1 mb-3 rounded focus:outline-none focus:border-orange-500"/>
+    <div className="border rounded-lg p-5 bg-gray-50">
+      <h3 className="font-semibold text-lg mb-5">Write a review</h3>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Rating (1-5)</label>
+        <input type="text" placeholder="4.5" value={rating} onChange={handleRatingChange}
+          className="border px-2 py-1.5 w-20 text-sm rounded focus:outline-none focus:border-orange-500"/>
+      </div>
 
-      <label className="text-sm font-medium text-gray-700">Your review</label>
-      <textarea placeholder="Share your experience with this product"
-        className="border px-3 py-2 w-full mt-1 mb-3 rounded resize-none h-28 overflow-y-auto focus:outline-none focus:border-orange-500"
-        value={comment} onChange={(e) => setComment(e.target.value)} />
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Mention Your review
+        </label>
+        <textarea value={comment} onChange={(e)=>setComment(e.target.value)}
+          placeholder="Share your experience with this product"
+          className="border px-3 py-2 w-full rounded resize-none h-28 overflow-y-auto focus:outline-none focus:border-orange-500"
+        />
+      </div>
 
-      <label className="text-sm font-medium text-gray-700">Upload images</label>
-      <input type="file" multiple accept="image/*" onChange={handleImages} className="mt-2" />
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Upload images(Optional)</label>
+        <input type="file" multiple accept="image/*" onChange={handleImages}/>
+      </div>
 
       {images.length > 0 && (
-        <div className="flex gap-3 mt-3">
-          {images.map((img,i)=>(
-            <img key={i} src={URL.createObjectURL(img)} className="w-16 h-16 object-cover rounded border" alt="preview"/>
+        <div className="flex gap-3 mb-4 flex-wrap">
+          {images.map((img, i) => (
+            <img key={i} src={URL.createObjectURL(img)} className="w-16 h-16 object-cover rounded border" alt="preview" />
           ))}
         </div>
       )}
 
-      <button onClick={submitReview} disabled={loading} 
-        className={`mt-4 px-5 py-2 rounded text-white ${loading ? "bg-gray-400 cursor-not-allowed":"bg-black hover:bg-gray-800"}`}>
+      <button onClick={submitReview} disabled={loading}
+        className={`w-full py-2 rounded text-white text-sm ${loading ? "bg-gray-400 cursor-not-allowed": "bg-black hover:bg-gray-800"}`} >
         {loading ? "Submitting..." : "Submit Review"}
       </button>
     </div>

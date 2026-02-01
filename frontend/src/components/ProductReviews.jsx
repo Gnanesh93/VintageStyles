@@ -31,11 +31,17 @@ const ProductReviews = ({productId})=>{
   },[productId]);
 
   return (
-    <div className="mt-10 flex flex-col sm:flex-row gap-10">
+    <div className="mt-10 flex flex-col lg:flex-row gap-10">
       <RatingSummary reviews={reviews} />
+
       <div className="flex-1">
         <ShowReviews reviews={reviews} />
-        {canReview && <AddReview productId={productId} onSuccess={fetchReviews} />}
+
+        {canReview && (
+          <div className="mt-6 lg:max-w-[420px]">
+          <AddReview productId={productId} onSuccess={fetchReviews} />
+          </div>
+        )}
       </div>
     </div>
   );
