@@ -43,9 +43,17 @@ const Product = () => {
   }
   }, [productData]);
 
+  // scroll to top when product id changes.
+  useEffect(()=>{
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  },[productId]);
+
 
   return productData ? (
-    <div className='border-t pt-10 transition-opacity esae-in duration-500 opacity-100'>
+    <div className='border-t pt-10 transition-opacity ease-in duration-500 opacity-100'>
       {/* product data */}
       <div className='flex gap-12 sm:gap-12 flex-col sm:flex-row'>
         {/* product images */}
