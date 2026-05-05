@@ -29,7 +29,7 @@ import lehenga from './lehenga.jpg'
 import kids from './kids.jpg'
 import suits from './suits.jpg'
 import sherwani from './sherwani.jpg'
-import dress from './dress.jpg'
+import dress from './dress.webp'
 
 
 export const assets = {
