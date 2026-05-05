@@ -6,6 +6,7 @@ import Title from '../components/Title'
 import ProductItem from '../components/ProductItem'
 
 const Collection = () => {
+
   const location = useLocation();
 
   const [showFilter,setShowFilter] = useState(false)
@@ -19,6 +20,7 @@ const Collection = () => {
 
   const {products,search,showSearch} = useContext(ShopContext);
 
+  // URL PARAMS
   useEffect(() => {
     const params = new URLSearchParams(location.search);
 
@@ -26,17 +28,11 @@ const Collection = () => {
     const subCatParam = params.get('subCategory');
     const typeParam = params.get('productType');
 
-    if (catParam) setCategory([catParam]);
-    else setCategory([]);
-
-    if (subCatParam) setSubCategory([subCatParam]);
-    else setSubCategory([]);
-
-    if (typeParam) setProductType([typeParam]);
-    else setProductType([]);
+    setCategory(catParam ? [catParam] : []);
+    setSubCategory(subCatParam ? [subCatParam] : []);
+    setProductType(typeParam ? [typeParam] : []);
 
   }, [location.search]);
-
 
   const toggleCategory = (e) => {
     if(category.includes(e.target.value)){
@@ -56,7 +52,16 @@ const Collection = () => {
     }
   }
 
+  const toggleProductType = (e) => {
+    if(productType.includes(e.target.value)){
+      setProductType(prev => prev.filter(item => item !== e.target.value))
+    } 
+    else {
+      setProductType(prev => [...prev,e.target.value])
+    }
+  }
 
+  // FILTER LOGIC
   const applyFilter = () => {
     let productsCopy = products.slice();
 
@@ -98,7 +103,6 @@ const Collection = () => {
     setFilterProducts(productsCopy);
   }
 
-
   const sortProduct = () => {
     let fpCopy = filterProducts.slice();
 
@@ -117,7 +121,6 @@ const Collection = () => {
     }
   }
 
-
   useEffect(()=>{
     applyFilter();
   },[products,category,subCategory,productType,search,showSearch]);
@@ -125,7 +128,6 @@ const Collection = () => {
   useEffect(()=>{
     sortProduct();
   },[sortType])
-
 
   return (
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
@@ -139,79 +141,50 @@ const Collection = () => {
             src={assets.dropdown_icon} alt=""/>
         </p>
 
-        <div className={`border border-gray-300 pl-5 my-3 mt-6 ${showFilter? "":'hidden'} sm:block`}>
-          <p className='mb-3 text-sm font-medium'>CATEGORIES</p>
+        <div className={`border pl-5 my-3 ${showFilter? "":'hidden'} sm:block`}>
+          <p className='mb-3 font-medium'>CATEGORIES</p>
 
-          <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
-            <p className='flex gap-2'>
-              <input type='checkbox' value="Men"
-                checked={category.includes("Men")}
-                onChange={toggleCategory}/> Men
-            </p>
-
-            <p className='flex gap-2'>
-              <input type='checkbox' value="Women"
-                checked={category.includes("Women")}
-                onChange={toggleCategory}/> Women
-            </p>
-
-            <p className='flex gap-2'>
-              <input type='checkbox' value="Kids"
-                checked={category.includes("Kids")}
-                onChange={toggleCategory}/> Kids
-            </p>
-          </div>
+          <label><input type='checkbox' value="Men" checked={category.includes("Men")} onChange={toggleCategory}/> Men</label><br/>
+          <label><input type='checkbox' value="Women" checked={category.includes("Women")} onChange={toggleCategory}/> Women</label><br/>
+          <label><input type='checkbox' value="Kids" checked={category.includes("Kids")} onChange={toggleCategory}/> Kids</label>
         </div>
 
-        <div className={`border border-gray-300 pl-5 my-3 ${showFilter? "":'hidden'} sm:block`}>
-          <p className='mb-3 text-sm font-medium'>TYPE</p>
+        <div className={`border pl-5 my-3 ${showFilter? "":'hidden'} sm:block`}>
+          <p className='mb-3 font-medium'>TYPE</p>
 
-          <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
-            <p className='flex gap-2'>
-              <input type='checkbox' value="Topwear"
-                checked={subCategory.includes("Topwear")}
-                onChange={toggleSubCategory}/> Topwear
-            </p>
+          <label><input type='checkbox' value="Topwear" checked={subCategory.includes("Topwear")} onChange={toggleSubCategory}/> Topwear</label><br/>
+          <label><input type='checkbox' value="Bottomwear" checked={subCategory.includes("Bottomwear")} onChange={toggleSubCategory}/> Bottomwear</label><br/>
+          <label><input type='checkbox' value="Winterwear" checked={subCategory.includes("Winterwear")} onChange={toggleSubCategory}/> Winterwear</label>
+        </div>
 
-            <p className='flex gap-2'>
-              <input type='checkbox' value="Bottomwear"
-                checked={subCategory.includes("Bottomwear")}
-                onChange={toggleSubCategory}/> Bottomwear
-            </p>
+        <div className={`border pl-5 my-3 ${showFilter? "":'hidden'} sm:block`}>
+          <p className='mb-3 font-medium'>PRODUCT TYPE</p>
 
-            <p className='flex gap-2'>
-              <input type='checkbox' value="Winterwear"
-                checked={subCategory.includes("Winterwear")}
-                onChange={toggleSubCategory}/> Winterwear
-            </p>
-          </div>
+          <label><input type='checkbox' value="Saree" checked={productType.includes("Saree")} onChange={toggleProductType}/> Saree</label><br/>
+          <label><input type='checkbox' value="Lehenga" checked={productType.includes("Lehenga")} onChange={toggleProductType}/> Lehenga</label><br/>
+          <label><input type='checkbox' value="Shirt" checked={productType.includes("Shirt")} onChange={toggleProductType}/> Shirt</label><br/>
+          <label><input type='checkbox' value="Suit" checked={productType.includes("Suit")} onChange={toggleProductType}/> Suit</label><br/>
+          <label><input type='checkbox' value="Sherwani" checked={productType.includes("Sherwani")} onChange={toggleProductType}/> Sherwani</label><br/>
+          <label><input type='checkbox' value="Dress" checked={productType.includes("Dress")} onChange={toggleProductType}/> Dress</label>
         </div>
 
       </div>
 
       <div className='flex-1'>
 
-        <div className='flex justify-between text-base sm:text-2xl mb-4'>
+        <div className='flex justify-between mb-4'>
           <Title text1={'ALL'} text2={'COLLECTIONS'} />
 
-          <select onChange={(e)=>setSortType(e.target.value)}
-            className='border-2 border-gray-300 text-sm px-2'>
-
-            <option value="relevant">Sort by: Relevant</option>
+          <select onChange={(e)=>setSortType(e.target.value)} className='border px-2'>
+            <option value="relevant">Relevant</option>
             <option value="low-high">Low to High</option>
             <option value="high-low">High to Low</option>
           </select>
         </div>
 
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
           {filterProducts.map((item,index)=>(
-            <ProductItem
-              key={index}
-              id={item._id}
-              name={item.name}
-              image={item.image}
-              price={item.price}
-            />
+            <ProductItem key={index} {...item}/>
           ))}
         </div>
 

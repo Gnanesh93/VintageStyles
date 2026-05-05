@@ -1,41 +1,41 @@
-import { useNavigate } from 'react-router-dom';
-import { assets } from '../assets/assets';
+import {useNavigate} from 'react-router-dom';
+import {assets} from '../assets/assets';
 
 const collections = [
   {
     label: 'Sarees',
     image: assets.sarees,
-    params: { category: 'Women', productType: 'Sarees' },
+    params: {category: 'Women', productType: 'Saree'}
   },
   {
     label: 'Shirts',
     image: assets.shirts,
-    params: { category: 'Men', productType: 'Shirts' },
+    params: {category: 'Men', productType: 'Shirt'}
   },
   {
     label: 'Lehengas',
     image: assets.lehenga,
-    params: { category: 'Women', productType: 'Lehengas' },
+    params: {category: 'Women', productType: 'Lehenga'}
   },
   {
     label: 'Children',
     image: assets.kids,
-    params: { category: 'Kids' },
+    params: {category: 'Kids'}
   },
   {
     label: 'Men Suits',
     image: assets.suits,
-    params: { category: 'Men', productType: 'Suits' },
+    params: {category: 'Men', productType: 'Suit'}
   },
   {
     label: 'Sherwani',
     image: assets.sherwani,
-    params: { category: 'Men', productType: 'Sherwani' },
+    params: {category: 'Men', productType: 'Sherwani'}
   },
   {
     label: 'Women Dresses',
     image: assets.dress,
-    params: { category: 'Women', productType: 'Dresses' },
+    params: {category: 'Women', productType: 'Dress'}
   }
 ];
 
