@@ -23,6 +23,14 @@ import slider4 from './slider4.webp'
 import slider5 from './slider5.webp'
 import slider6 from './slider6.jpg'
 
+import sarees from './sarees.jpg'
+import shirts from './shirts.jpg'
+import lehenga from './lehenga.jpg'
+import kids from './kids.jpg'
+import suits from './suits.jpg'
+import sherwani from './sherwani.jpg'
+import dress from './dress.jpg'
+
 
 export const assets = {
     logo,
@@ -48,5 +56,12 @@ export const assets = {
     slider3,
     slider4,
     slider5,
-    slider6
+    slider6,
+    sarees,
+    shirts,
+    lehenga,
+    kids,
+    suits,
+    sherwani,
+    dress
 }

@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import connectDb from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
+
 import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
 import cartRouter from './routes/cartRoute.js';
