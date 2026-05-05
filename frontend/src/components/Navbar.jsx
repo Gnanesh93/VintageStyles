@@ -2,7 +2,6 @@ import {assets} from '../assets/assets'
 import {Link,NavLink} from 'react-router-dom';
 import {useContext, useState} from 'react';
 import {ShopContext} from '../context/ShopContext';
-import CollectionBoxes from './CollectionBoxes';
 
 const Navbar = () => {
     const[visible,setVisible]=useState(false);
@@ -75,8 +74,6 @@ const Navbar = () => {
               </div>
           </div>
       </div>
-
-      <CollectionBoxes />
     </div>
   )
 }
