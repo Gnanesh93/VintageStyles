@@ -1,6 +1,7 @@
 import orderModel from "../models/orderModel.js"
 import userModel from "../models/userModel.js";
 import Stripe from 'stripe'
+import generateInvoice from "../utility/generateInvoice.js";
 
 // global variables
 const currency='inr'
@@ -178,4 +179,48 @@ const updateStatus=async (req,res)=>{
     }
 }
 
-export {placeOrder,placeOrderStripe,verifyStripe,allOrders,userOrders,updateStatus,trackOrder}
+
+// download order invoice
+const downloadUserInvoice = async (req,res)=>{
+  try {
+    const {orderId}=req.params;
+    const userId = req.userId;
+    const order = await orderModel.findOne({_id: orderId,userId});
+
+    if (!order){
+      return res.json({success: false,message: "Order not found"});
+    }
+
+    if (!order.assignedPartner){
+      return res.json({success: false,message: "Delivery partner not assigned yet"});
+    }
+
+    generateInvoice(res,order);
+  }
+  catch (error){
+    console.log(error);
+    res.json({success: false,message: error.message});
+  }
+};
+
+const downloadAdminInvoice = async (req,res)=>{
+  try {
+    const {orderId}=req.params;
+    const order = await orderModel.findById(orderId);
+    if (!order){
+      return res.json({success: false, message: "Order not found"});
+    }
+
+    if (!order.assignedPartner){
+      return res.json({success: false,message: "Delivery partner not assigned yet"});
+    }
+
+    generateInvoice(res, order);
+  }
+  catch (error){
+    console.log(error);
+    res.json({success: false,message: error.message});
+  }
+};
+
+export {placeOrder,placeOrderStripe,verifyStripe,allOrders,userOrders,updateStatus,trackOrder,downloadUserInvoice,downloadAdminInvoice}
