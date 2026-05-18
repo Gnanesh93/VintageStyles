@@ -42,18 +42,24 @@ const TrackingPage = ()=>{
 
   // download user invoice
   const downloadInvoice = async ()=>{
-    try {
-      const token =localStorage.getItem('token');
-      const response = await axios.get(backendUrl +`/api/order/user-invoice/${order._id}`,{headers:{token},responseType:'blob'});
-      const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.get(backendUrl +`/api/order/user-invoice/${order._id}`,{headers:{token},responseType:'blob'});
+    const url =window.URL.createObjectURL(new Blob([response.data]));
+    const link =document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `invoice-${order._id}.pdf`);
 
-      window.open(fileURL);
-    }
-    catch(error){
-      console.log(error);
-      toast.error("Failed to download invoice");
-    }
-  };
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  }
+  catch (error){
+    console.log(error);
+    toast.error("Failed to download invoice");
+  }
+};
 
   // Status show
   const statusSteps=['Order Placed','Packing','Shipped','Out for delivery','Delivered'];

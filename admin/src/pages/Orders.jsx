@@ -45,9 +45,15 @@ const Orders = ({adminToken})=>{
     try {
       const response = await axios.get(backendUrl +`/api/order/admin-invoice/${orderId}`,{headers:{token:adminToken},responseType:'blob'});
       const fileURL = window.URL.createObjectURL(new Blob([response.data]));
-      window.open(fileURL);
+      const link = document.createElement('a');
+      link.href = fileURL;
+      link.setAttribute('download',`invoice-${orderId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(fileURL);
     }
-    catch (error){
+    catch(error){
       console.log(error);
       toast.error("Failed to download invoice");
     }
