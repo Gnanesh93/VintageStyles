@@ -1,142 +1,179 @@
 import PDFDocument from "pdfkit";
 
-const generateInvoice = (res,order)=>{
-  const doc = new PDFDocument({margin:50 });
-  res.setHeader("Content-Type", "application/pdf");
-
-  res.setHeader("Content-Disposition",`inline; filename=invoice-${order._id}.pdf` );
+const generateInvoice=(res,order)=>{
+  const doc=new PDFDocument({margin:40,size:"A4"});
+  res.setHeader("Content-Type","application/pdf");
+  res.setHeader("Content-Disposition",`inline; filename=invoice-${order._id}.pdf`);
   doc.pipe(res);
+  const primaryColor="#111111";
+  const lightGray="#F3F4F6";
 
   doc
-    .fontSize(28)
+    .rect(30,30,550,760)
+    .stroke();
+
+  doc
     .font("Helvetica-Bold")
-    .text("Vintage Styles", {align: "center" });
-
-  doc.moveDown();
+    .fontSize(24)
+    .fillColor(primaryColor)
+    .text("Vintage Styles",45,45);
 
   doc
-    .fontSize(20)
-    .text("INVOICE", {align: "center"});
+    .font("Helvetica")
+    .fontSize(10)
+    .text("Fashion that defines your style",47,72);
 
-  doc.moveDown(2);
-
-  // ORDER DETAILS
   doc
+    .rect(410,40,140,30)
+    .stroke();
+
+  doc
+    .font("Helvetica-Bold")
     .fontSize(13)
-    .font("Helvetica");
+    .text("TAX INVOICE",435,50);
 
-  doc.text(`Order ID: ${order._id}`);
-
-  doc.text(`Date: ${new Date(order.date).toLocaleString()}` );
-
-  doc.text(`Order Status: ${order.status}`);
-
-  doc.text(`Payment Method: ${order.paymentMethod}`);
-
-  doc.text(`Payment Status: ${order.payment ? "Paid" : "Pending"}`);
-
-  doc.moveDown();
-
-  // CUSTOMER DETAILS
   doc
-    .fontSize(16)
+    .moveTo(30,95)
+    .lineTo(580,95)
+    .stroke();
+
+  doc
     .font("Helvetica-Bold")
-    .text("Customer Details");
-
-  doc.moveDown(0.5);
+    .fontSize(12)
+    .text("Order Details",45,110);
 
   doc
+    .font("Helvetica")
+    .fontSize(10);
+
+  doc.text(`Order ID: ${order._id}`,45,135);
+
+  doc.text(`Order Date: ${new Date(order.date).toLocaleDateString()}`,45,155);
+
+  doc.text(`Invoice Date: ${new Date(order.date).toLocaleDateString()}`,45,175);
+
+  doc.text(`Payment: ${order.payment ? "Paid" : "Pending"}`,45,195);
+
+  doc
+    .font("Helvetica-Bold")
     .fontSize(12)
-    .font("Helvetica");
+    .text("Billing Address",240,110);
 
-  doc.text(`Name: ${order.address.firstName} ${order.address.lastName}`);
+  doc
+    .font("Helvetica")
+    .fontSize(10);
 
-  doc.text(`Phone: ${order.address.phone}`);
+  doc.text(`${order.address.firstName} ${order.address.lastName}`,240,135);
 
-  doc.text(`Address: ${order.address.street}, ${order.address.city}, ${order.address.state}, ${order.address.country} - ${order.address.zipcode}`);
+  doc.text(`${order.address.street}`,240,155,{width:140});
 
-  doc.moveDown();
+  doc.text(`${order.address.city}, ${order.address.state}`,240,185);
 
-  // DELIVERY PARTNER DETAILS
-  if (order.assignedPartner){
+  doc.text(`${order.address.country} - ${order.address.zipcode}`,240,205);
+
+  doc.text(`Phone: ${order.address.phone}`,240,225);
+
+  doc
+    .font("Helvetica-Bold")
+    .fontSize(12)
+    .text("Shipping Address",420,110);
+
+  doc
+    .font("Helvetica")
+    .fontSize(10);
+
+  doc.text(`${order.address.firstName} ${order.address.lastName}`, 420,135,{width:120});
+
+  doc.text(`${order.address.street}`,420,155,{width:120});
+
+  doc.text(`${order.address.city}, ${order.address.state}`,420,185,{width:120});
+
+  doc.text(`${order.address.country} - ${order.address.zipcode}`,420,215,{width:120});
+
+  if(order.assignedPartner){
     doc
-      .fontSize(16)
+      .moveTo(30,270)
+      .lineTo(580,270)
+      .stroke();
+
+    doc
       .font("Helvetica-Bold")
-      .text("Delivery Partner Details");
-
-    doc.moveDown(0.5);
+      .fontSize(12)
+      .text("Delivery Partner",45,285);
 
     doc
-      .fontSize(12)
-      .font("Helvetica");
+      .font("Helvetica")
+      .fontSize(10);
 
-    doc.text(`Company Name: ${order.assignedPartner.companyName}`);
+    doc.text(`Company: ${order.assignedPartner.companyName}`,45,310);
 
-    doc.text(`Partner ID: ${order.assignedPartner.partnerId}`);
+    doc.text(`Partner ID: ${order.assignedPartner.partnerId}`,250,310);
 
-    doc.text(`Phone: ${order.assignedPartner.phone}`);
-
-    doc.text(`Delivery Charges: ₹${order.assignedPartner.charges}`);
-
-    doc.moveDown();
+    doc.text(`Phone: ${order.assignedPartner.phone}`,430,310);
   }
 
-  // PRODUCTS TABLE
+
+  const tableTop=360;
   doc
-    .fontSize(16)
+    .rect(30,tableTop,550,28)
+    .fillAndStroke(lightGray,primaryColor);
+
+  doc
+    .fillColor(primaryColor)
     .font("Helvetica-Bold")
-    .text("Ordered Products");
+    .fontSize(11);
 
-  doc.moveDown();
+  doc.text("Product",45,369);
+  doc.text("Size",320,369);
+  doc.text("Qty",390,369);
+  doc.text("Price",450,369);
+  doc.text("Total",520,369);
 
-  doc
-    .fontSize(12)
-    .font("Helvetica-Bold");
+  let y=400;
 
-  doc.text("Product", 50);
-  doc.text("Size", 260);
-  doc.text("Qty", 330);
-  doc.text("Price", 390);
-  doc.text("Total", 470);
-
-  doc.moveDown();
-
-  let calculatedTotal = 0;
-  order.items.forEach((item) => {
+  order.items.forEach((item)=>{
     const total=item.price * item.quantity;
-    calculatedTotal += total;
+    doc
+      .font("Helvetica")
+      .fontSize(10)
+      .fillColor(primaryColor);
+
+    doc.text(item.name,45,y,{width:240});
+
+    doc.text(item.size || "N/A",320,y);
+
+    doc.text(item.quantity.toString(),390,y);
+
+    doc.text(`₹${item.price}`,450,y);
+
+    doc.text(`₹${total}`,520,y);
 
     doc
-      .fontSize(11)
-      .font("Helvetica");
-
-    doc.text(item.name, 50);
-
-    doc.text(item.size || "N/A",260);
-
-    doc.text(item.quantity.toString(),330);
-
-    doc.text(`₹${item.price}`,390);
-
-    doc.text(`₹${total}`,470);
-
-    doc.moveDown();
+      .moveTo(30,y + 25)
+      .lineTo(580,y + 25)
+      .strokeColor("#DDDDDD")
+      .stroke();
+    y += 35;
   });
 
-  // GRAND TOTAL
-  doc.moveDown();
+  doc
+    .rect(380,y + 20,200,55)
+    .stroke();
 
   doc
-    .fontSize(17)
     .font("Helvetica-Bold")
-    .text(`Grand Total: ₹${order.amount}`,{align: "right"});
+    .fontSize(17)
+    .fillColor(primaryColor);
 
-  doc.moveDown(2);
+  doc.text("Grand Total",400,y + 38);
+
+  doc.text(`₹ ${order.amount}`,505,y + 38);
 
   doc
-    .fontSize(12)
     .font("Helvetica")
-    .text("Thank you for shopping with Vintage Styles.Have a great day!",{align: "center"});
+    .fontSize(9)
+    .fillColor("gray")
+    .text("This is a computer generated invoice. No signature required.",150,760);
 
   doc.end();
 };
