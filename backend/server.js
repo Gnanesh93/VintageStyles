@@ -14,23 +14,32 @@ import deliveryPartnerRouter from "./routes/deliveryPartnerRoute.js";
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Connect DB and Cloudinary
-connectDb();
-connectCloudinary();
 
 // Middleware
-app.use(express.json());
 
-app.use(cors({
-  origin: [
+const allowedOrigins= [
     "http://localhost:5174",
     "http://localhost:5173",
     "https://vintage-styles-frontend.vercel.app",
-    "https://vintage-styles-admin.vercel.app"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization", "token"]
+    "https://vintage-styles-admin.vercel.app",
+  ]
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS blocked"));
+    }
+  },
+  credentials: true
 }));
+
+// Connect DB and Cloudinary
+connectDb();
+connectCloudinary();
+  
+app.use(express.json());
 
 
 // Routes

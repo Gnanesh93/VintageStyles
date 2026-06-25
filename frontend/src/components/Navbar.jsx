@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-[9999] bg-white shadow-sm">
-      <div className='flex items-center justify-between py-5 font-medium bg-white'>
+      <div className='flex items-center justify-between py-2.5 font-medium bg-white'>
           <Link to="/"><img src={assets.logo} alt="logo2" className="w-16 sm:w-20 md:w-24 lg:w-28 border-3 border-transparent hover:border-yellow-700 rounded-lg transition-all duration-300"/></Link>
           <ul className="hidden sm:flex gap-5 text-sm text-gray-700 ">
               <NavLink to="/" className="flex flex-col items-center gap-1">

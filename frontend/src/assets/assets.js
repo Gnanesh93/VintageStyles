@@ -1,41 +1,39 @@
-import logo from './logo.png'
-import hero_img from './hero_img.png'
-import cart_icon from './cart_icon.png'
-import bin_icon from './bin_icon.png'
-import dropdown_icon from './dropdown_icon.png'
-import exchange_icon from './exchange_icon.png'
-import profile_icon from './profile_icon.png'
-import quality_icon from './quality_icon.png'
-import search_icon from './search_icon.png'
-import star_dull_icon from './star_dull_icon.png'
-import star_icon from './star_icon.png'
-import support_img from './support_img.png'
-import menu_icon from './menu_icon.png'
-import about_img from './about_img.jpeg'
-import contact_img from './contact_img.jpeg'
-import razorpay_logo from './razorpay_logo.png'
-import stripe_logo from './stripe_logo.png'
-import cross_icon from './cross_icon.png'
+import logo from './logo.webp'
+import cart_icon from './cart_icon.webp'
+import bin_icon from './bin_icon.webp'
+import dropdown_icon from './dropdown_icon.webp'
+import exchange_icon from './exchange_icon.webp'
+import profile_icon from './profile_icon.webp'
+import quality_icon from './quality_icon.webp'
+import search_icon from './search_icon.webp'
+import star_dull_icon from './star_dull_icon.webp'
+import star_icon from './star_icon.webp'
+import support_img from './support_img.webp'
+import menu_icon from './menu_icon.webp'
+import stripe_logo from './stripe_logo.webp'
+import cross_icon from './cross_icon.webp'
 
-import slider1 from './slider1.jpg'
-import slider2 from './slider2.jpg'
-import slider3 from './slider3.png'
+import about_img from './about_img.webp'
+import contact_img from './contact_img.webp'
+
+import slider1 from './slider1.webp'
+import slider2 from './slider2.webp'
+import slider3 from './slider3.webp'
 import slider4 from './slider4.webp'
 import slider5 from './slider5.webp'
-import slider6 from './slider6.jpg'
+import slider6 from './slider6.webp'
 
-import sarees from './sarees.jpg'
-import shirts from './shirts.jpg'
-import lehenga from './lehenga.jpg'
-import kids from './kids.jpg'
-import suits from './suits.jpg'
-import sherwani from './sherwani.jpg'
+import sarees from './sarees.webp'
+import shirts from './shirts.webp'
+import lehenga from './lehenga.webp'
+import kids from './kids.webp'
+import suits from './suits.webp'
+import sherwani from './sherwani.webp'
 import dress from './dress.webp'
 
 
 export const assets = {
     logo,
-    hero_img,
     cart_icon,
     dropdown_icon,
     exchange_icon,
@@ -49,7 +47,6 @@ export const assets = {
     menu_icon,
     about_img,
     contact_img,
-    razorpay_logo,
     stripe_logo,
     cross_icon,
     slider1,

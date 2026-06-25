@@ -8,8 +8,8 @@ import CollectionBoxes from '../components/CollectionBoxes'
 const Home = () => {
   return (
     <div>
-      <CollectionBoxes />
       <Hero />
+      <CollectionBoxes />
       <LatestCollection />
       <BestSeller />
       <OurPolicy/>

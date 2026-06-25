@@ -1,42 +1,43 @@
-import {useNavigate} from 'react-router-dom';
-import {assets} from '../assets/assets';
+import {useNavigate} from "react-router-dom";
+import {assets} from "../assets/assets";
+import Title from "./Title";
 
 const collections = [
   {
-    label: 'Sarees',
+    label: "Sarees",
     image: assets.sarees,
-    params: {category: 'Women', productType: 'Saree'}
+    params: { category: "Women", productType: "Saree" },
   },
   {
-    label: 'Shirts',
+    label: "Shirts",
     image: assets.shirts,
-    params: {category: 'Men', productType: 'Shirt'}
+    params: { category: "Men", productType: "Shirt" },
   },
   {
-    label: 'Lehengas',
+    label: "Lehengas",
     image: assets.lehenga,
-    params: {category: 'Women', productType: 'Lehenga'}
+    params: { category: "Women", productType: "Lehenga" },
   },
   {
-    label: 'Children',
+    label: "Children",
     image: assets.kids,
-    params: {category: 'Kids'}
+    params: { category: "Kids" },
   },
   {
-    label: 'Men Suits',
+    label: "Men Suits",
     image: assets.suits,
-    params: {category: 'Men', productType: 'Suit'}
+    params: { category: "Men", productType: "Suit" },
   },
   {
-    label: 'Sherwani',
+    label: "Sherwani",
     image: assets.sherwani,
-    params: {category: 'Men', productType: 'Sherwani'}
+    params: { category: "Men", productType: "Sherwani" },
   },
   {
-    label: 'Women Dresses',
+    label: "Women Dresses",
     image: assets.dress,
-    params: {category: 'Women', productType: 'Dress'}
-  }
+    params: { category: "Women", productType: "Dress" },
+  },
 ];
 
 const CollectionBoxes = () => {
@@ -48,25 +49,30 @@ const CollectionBoxes = () => {
   };
 
   return (
-    <div className="w-full py-3 pb-4 border-b border-gray-200 bg-white">
-      <div className="flex gap-3 overflow-x-auto px-2 scrollbar-hide sm:justify-center">
-
+    <div className="w-full bg-white py-4">
+      <div className="text-center pt-1 pb-2 text-2xl">
+        <Title text1={"SHOP BY"} text2={"CATEGORY"} />
+      </div>
+      <div className="max-w-7xl mx-auto flex gap-4 overflow-x-auto px-3 scrollbar-hide sm:justify-center">
         {collections.map((col) => (
           <button
             key={col.label}
             onClick={() => handleClick(col.params)}
-            className="flex-shrink-0 flex flex-col items-center group"
+            className="flex-shrink-0 flex flex-col items-center group transition-all duration-300"
           >
-            <div className="w-[85px] h-[85px] sm:w-[110px] sm:h-[110px] rounded-xl overflow-hidden shadow-md group-hover:scale-105 transition duration-300">
-              <img src={col.image} alt={col.label} className="w-full h-full object-cover" />
+            <div className="w-[90px] h-[90px] sm:w-[105px] sm:h-[105px] lg:w-[110px] lg:h-[110px] rounded-xl overflow-hidden shadow-md group-hover:scale-105 transition duration-300">
+              <img
+                src={col.image}
+                alt={col.label}
+                className="w-full h-full object-cover"
+              />
             </div>
 
-            <p className="text-xs sm:text-sm mt-2 text-gray-700 font-medium text-center">
+            <p className="text-xs sm:text-sm mt-2 text-gray-800 font-medium text-center">
               {col.label}
             </p>
           </button>
         ))}
-
       </div>
     </div>
   );
