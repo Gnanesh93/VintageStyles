@@ -1,24 +1,23 @@
 import {Routes,Route} from 'react-router-dom'
 import Home from './pages/Home'
-import Collection from './pages/Collection'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Product from './pages/Product'
-import Cart from './pages/Cart'
-import Login from './pages/Login'
-import PlaceOrder from './pages/PlaceOrder'
-import Orders from './pages/Orders'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Verify from './pages/Verify'
-import TrackingPage from './pages/TrackingPage'
-import ProductWrapper from './pages/ProductWrapper'
-import ForgotPassword from './pages/ForgotPassword'
-import ResetPassword from './pages/ResetPassword'
+import {lazy,Suspense} from 'react';
 
+
+const Collection = lazy(()=>import('./pages/Collection'));
+const About=lazy(()=>import('./pages/About'));
+const Contact=lazy(()=>('./pages/Contact'));
+const Cart=lazy(()=>('./pages/Cart'));
+const Login=lazy(()=>('./pages/Login'));
+const PlaceOrder=lazy(()=>('./pages/PlaceOrder'));
+const Orders=lazy(()=>('./pages/Orders'));
+const Verify=lazy(()=>('./pages/Verify'));
+const TrackingPage=lazy(()=>('./pages/TrackingPage'));
+const ProductWrapper=lazy(()=>('./pages/ProductWrapper'));
+const ForgotPassword=lazy(()=>('./pages/ForgotPassword'));
+const ResetPassword=lazy(()=>('./pages/ResetPassword'));
 
 const App = () => {
   return (
@@ -26,7 +25,10 @@ const App = () => {
       <ToastContainer />
       <Navbar />
       <SearchBar />
-      <Routes>
+      <Suspense fallback={
+        <div><h3>loading...</h3></div>
+      }>
+        <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/collection" element={<Collection/>} />
         <Route path="/about" element={<About/>} />
@@ -41,6 +43,7 @@ const App = () => {
         <Route path="/track/:orderId" element={<TrackingPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
+      </Suspense>
       <Footer/>
     </div>
   )
