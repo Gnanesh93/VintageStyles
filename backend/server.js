@@ -15,7 +15,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 
-// Middleware
 
 const allowedOrigins= [
     "http://localhost:5174",
@@ -35,10 +34,13 @@ app.use(cors({
   credentials: true
 }));
 
+
+
+
 // Connect DB and Cloudinary
 connectDb();
 connectCloudinary();
-  
+
 app.use(express.json());
 
 
