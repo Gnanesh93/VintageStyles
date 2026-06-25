@@ -1,23 +1,23 @@
 import {Routes,Route} from 'react-router-dom'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import {lazy,Suspense} from 'react';
 
-
-const Collection = lazy(()=>import('./pages/Collection'));
-const About=lazy(()=>import('./pages/About'));
-const Contact=lazy(()=>('./pages/Contact'));
-const Cart=lazy(()=>('./pages/Cart'));
-const Login=lazy(()=>('./pages/Login'));
-const PlaceOrder=lazy(()=>('./pages/PlaceOrder'));
-const Orders=lazy(()=>('./pages/Orders'));
-const Verify=lazy(()=>('./pages/Verify'));
-const TrackingPage=lazy(()=>('./pages/TrackingPage'));
-const ProductWrapper=lazy(()=>('./pages/ProductWrapper'));
-const ForgotPassword=lazy(()=>('./pages/ForgotPassword'));
-const ResetPassword=lazy(()=>('./pages/ResetPassword'));
+const Collection = lazy(() => import('./pages/Collection'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Cart = lazy(() => import('./pages/Cart'));
+const Login = lazy(() => import('./pages/Login'));
+const PlaceOrder = lazy(() => import('./pages/PlaceOrder'));
+const Orders = lazy(() => import('./pages/Orders'));
+const Verify = lazy(() => import('./pages/Verify'));
+const TrackingPage = lazy(() => import('./pages/TrackingPage'));
+const ProductWrapper = lazy(() => import('./pages/ProductWrapper'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 
 const App = () => {
   return (
