@@ -56,3 +56,14 @@ a.active hr{
   }
 }
 
+.Toastify__toast-container--top-right{
+  top:1rem !important;
+  right:1rem !important;
+  left:auto !important;
+  transform:none !important;
+}
+
+.Toastify__toast-container{
+  z-index:999999 !important;
+}
+
